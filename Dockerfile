@@ -5,7 +5,7 @@ MAINTAINER Samuel Kitono <samuel@kitono.id>
 RUN mkdir -p /usr/src/finliv-backend
 WORKDIR /usr/src/finliv-backend
 
-RUN npm install -g yarn && npm install -g pm2 && npm install -g sequelize-cli
+RUN npm install -g yarn && npm install -g pm2 && npm install -g sequelize-cli && npm install -g node-inspector
 
 # Install dependencies first so we do not have to this everytime
 COPY package.json /usr/src/finliv-backend
@@ -16,6 +16,6 @@ RUN yarn
 COPY . .
 
 # Expose port and then start the app
-EXPOSE 4040
+EXPOSE 4040 8080 5858
 CMD [ "yarn", "start" ]
 

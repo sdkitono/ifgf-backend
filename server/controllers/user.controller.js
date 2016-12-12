@@ -27,17 +27,6 @@ function get(req, res) {
  * @returns {User}
  */
 function create(req, res) {
-  /*
-  const user = new User({
-    username: req.body.username,
-    mobileNumber: req.body.mobileNumber
-  });
-
-  user.save()
-    .then(savedUser => res.json(savedUser))
-    .catch(e => next(e));
-    */
-
   User
     .findOrCreate({ where: { email: req.body.email, password: req.body.password } })
     .spread((user, created) => {

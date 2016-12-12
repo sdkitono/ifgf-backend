@@ -35,20 +35,21 @@ gulp.task('copy_config', () =>
 gulp.task('babel', () =>
   gulp.src([...paths.js, '!gulpfile.babel.js'], { base: '.' })
     .pipe(plugins.newer('dist'))
-    .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.babel())
-    .pipe(plugins.sourcemaps.write('.', {
-      includeContent: false,
-      sourceRoot(file) {
-        return path.relative(file.path, __dirname);
-      }
+    .pipe(plugins.sourcemaps.init({
+      identityMap: true,
+      debug: true
     }))
+    .pipe(plugins.babel())
+    .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest('dist'))
 );
 
 // Start server with restart on file changes
 gulp.task('nodemon', ['copy', 'copy_config', 'babel'], () =>
   plugins.nodemon({
+    execMap: {
+      js: 'node --debug=5858'
+    },
     script: path.join('dist', 'index.js'),
     ext: 'js',
     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],

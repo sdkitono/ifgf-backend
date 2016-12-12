@@ -9,10 +9,13 @@ import httpStatus from 'http-status';
 import expressWinston from 'express-winston';
 import expressValidation from 'express-validation';
 import helmet from 'helmet';
+import passport from 'passport';
+import { Strategy } from 'passport-local';
 import winstonInstance from './winston';
 import routes from '../server/routes/index.route';
 import config from './env';
 import APIError from '../server/helpers/APIError';
+
 
 const app = express();
 
@@ -45,6 +48,31 @@ if (config.env === 'development') {
     colorStatus: true // Color the status code (default green, 3XX cyan, 4XX yellow, 5XX red).
   }));
 }
+
+// Setting up passport
+passport.use(new Strategy(
+  {
+    usernameField: 'email',
+    passwordField: 'password',
+    session: false
+  },
+  (username, password, done) => {
+    console.log('GOING UP PASSPORT');
+    // database dummy - find user and verify password
+    if (username === 'samuel@kitono.com' && password === 'password') {
+      return done(null, {
+        id: 123,
+        firstname: 'devils',
+        lastname: 'name',
+        email: 'devil@he.ll',
+        verified: true
+      });
+    }
+    return done(null, false);
+  }
+));
+
+app.use(passport.initialize());
 
 // mount all routes on /api path
 app.use('/api', routes);

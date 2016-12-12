@@ -18,6 +18,7 @@ const user = {
  * @returns {*}
  */
 function login(req, res, next) {
+  /*
   // Ideally you'll fetch this from the db
   // Idea here was to show how jwt works with simplicity
   if (req.body.username === user.username && req.body.password === user.password) {
@@ -32,6 +33,7 @@ function login(req, res, next) {
 
   const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED);
   return next(err);
+  */
 }
 
 /**
