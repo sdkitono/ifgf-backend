@@ -59,19 +59,6 @@ passport.use(new LocalStrategy(
     session: false
   },
   (username, password, done) => {
-    /*
-    User.findOne({
-      where: {
-        email: username,
-        password
-      }
-    }).then((user) => {
-      if (user) {
-        return done(null, user);
-      }
-      return done(null, false);
-    });
-    */
     User.findOne({ where: { email: username } }).then((user) => {
       if (user) {
         bcrypt.compare(password, user.password).then((result) => {

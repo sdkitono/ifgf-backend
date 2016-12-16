@@ -36,11 +36,6 @@ function serialize(req, res, next) {
     next();
   });
   */
-
-  // we store information needed in token in req.user again
-  req.user = {
-    id: 123
-  };
   next();
 }
 
