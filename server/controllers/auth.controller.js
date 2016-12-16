@@ -1,14 +1,8 @@
-import jwt from 'jsonwebtoken';
 import httpStatus from 'http-status';
+import bcrypt from 'bcrypt';
 import APIError from '../helpers/APIError';
-
+import { User } from '../models';
 const config = require('../../config/env');
-
-// sample user, used for authentication
-const user = {
-  username: 'react',
-  password: 'express'
-};
 
 /**
  * Returns jwt token if valid username and password is provided
@@ -34,6 +28,21 @@ function login(req, res, next) {
   const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED);
   return next(err);
   */
+
+  const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED);
+  User.findOne({ where: { email: req.body.email } }).then((user) => {
+    if (user) {
+      bcrypt.compare(req.body.password, user.password).then((result) => {
+        if (result) {
+          next();
+        } else {
+          next(err);
+        }
+      });
+    } else {
+      next(err);
+    }
+  });
 }
 
 /**

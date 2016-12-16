@@ -9,7 +9,8 @@ RUN npm install -g yarn && npm install -g pm2 && npm install -g sequelize-cli &&
 
 # Install dependencies first so we do not have to this everytime
 COPY package.json /usr/src/finliv-backend
-RUN yarn
+RUN yarn cache clean
+RUN yarn install
 
 # Copy in the application code from your work station at the current directory
 # over to the working directory.

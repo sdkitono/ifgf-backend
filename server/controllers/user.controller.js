@@ -1,4 +1,8 @@
+import winston from 'winston';
+import bcrypt from 'bcrypt';
 import { User } from '../models';
+
+const saltRounds = 10;
 
 /**
  * Load user and append to req.
@@ -27,15 +31,17 @@ function get(req, res) {
  * @returns {User}
  */
 function create(req, res) {
-  User
-    .findOrCreate({ where: { email: req.body.email, password: req.body.password } })
+  bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+    User
+    .findOrCreate({ where: { email: req.body.email, password: hash } })
     .spread((user, created) => {
-      console.log(user.get({
+      winston.info(user.get({
         plain: true
       }));
-      console.log(created);
+      winston.info(created);
       res.json(user);
     });
+  });
 }
 
 /**

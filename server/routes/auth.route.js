@@ -8,7 +8,6 @@ import authCtrl from '../controllers/auth.controller';
 import config from '../../config/env';
 
 const router = express.Router(); // eslint-disable-line new-cap
-const SECRET = 'server secret';
 const TOKENTIME = 120 * 60; // in seconds
 
 /** POST /api/auth/login - Returns token if correct username and password is provided */
@@ -48,7 +47,7 @@ function serialize(req, res, next) {
 function generateToken(req, res, next) {
   req.token = jwt.sign({
     id: req.user.id,
-  }, SECRET, {
+  }, config.jwtSecret, {
     expiresIn: TOKENTIME
   });
   next();

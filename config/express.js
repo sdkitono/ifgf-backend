@@ -10,11 +10,13 @@ import expressWinston from 'express-winston';
 import expressValidation from 'express-validation';
 import helmet from 'helmet';
 import passport from 'passport';
-import { Strategy } from 'passport-local';
+import bcrypt from 'bcrypt';
+import { Strategy as LocalStrategy } from 'passport-local';
 import winstonInstance from './winston';
 import routes from '../server/routes/index.route';
 import config from './env';
 import APIError from '../server/helpers/APIError';
+import { User } from '../server/models';
 
 
 const app = express();
@@ -50,25 +52,38 @@ if (config.env === 'development') {
 }
 
 // Setting up passport
-passport.use(new Strategy(
+passport.use(new LocalStrategy(
   {
     usernameField: 'email',
     passwordField: 'password',
     session: false
   },
   (username, password, done) => {
-    console.log('GOING UP PASSPORT');
-    // database dummy - find user and verify password
-    if (username === 'samuel@kitono.com' && password === 'password') {
-      return done(null, {
-        id: 123,
-        firstname: 'devils',
-        lastname: 'name',
-        email: 'devil@he.ll',
-        verified: true
-      });
-    }
-    return done(null, false);
+    /*
+    User.findOne({
+      where: {
+        email: username,
+        password
+      }
+    }).then((user) => {
+      if (user) {
+        return done(null, user);
+      }
+      return done(null, false);
+    });
+    */
+    User.findOne({ where: { email: username } }).then((user) => {
+      if (user) {
+        bcrypt.compare(password, user.password).then((result) => {
+          if (result) {
+            done(null, user);
+          }
+          done(null, false);
+        });
+      } else {
+        done(null, false);
+      }
+    });
   }
 ));
 
