@@ -53,8 +53,7 @@ gulp.task('nodemon', ['copy', 'copy_config', 'babel'], () =>
     script: path.join('dist', 'index.js'),
     ext: 'js',
     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
-    tasks: ['copy', 'babel'],
-    legacyWatch: true
+    tasks: ['copy', 'babel']
   })
 );
 

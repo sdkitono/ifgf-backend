@@ -5,7 +5,7 @@ MAINTAINER Samuel Kitono <samuel@kitono.id>
 RUN mkdir -p /usr/src/finliv-backend
 WORKDIR /usr/src/finliv-backend
 
-RUN npm install -g yarn && npm install -g pm2 && npm install -g sequelize-cli && npm install -g node-inspector
+RUN npm install -g yarn && npm install -g sequelize-cli && npm install -g node-inspector
 
 # Install dependencies first so we do not have to this everytime
 COPY package.json /usr/src/finliv-backend

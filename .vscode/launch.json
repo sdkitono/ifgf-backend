@@ -14,7 +14,7 @@
         {
             "type": "node",
             "request": "attach",
-            "address": "192.168.99.100",
+            "address": "localhost",
             "sourceMaps": true,
             "restart": true,
             "localRoot": "${workspaceRoot}/",

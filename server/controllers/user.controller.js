@@ -31,16 +31,22 @@ function get(req, res) {
  * @returns {User}
  */
 function create(req, res) {
-  bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-    User
-    .findOrCreate({ where: { email: req.body.email, password: hash } })
-    .spread((user, created) => {
-      winston.info(user.get({
-        plain: true
-      }));
-      winston.info(created);
+  User.findOne({ where: { email: req.body.email } }).then((user) => {
+    if (user) {
       res.json(user);
-    });
+    } else {
+      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        User
+        .findOrCreate({ where: { email: req.body.email, password: hash } })
+        .spread((userCreate, created) => {
+          winston.info(userCreate.get({
+            plain: true
+          }));
+          winston.info(created);
+          res.json(userCreate);
+        });
+      });
+    }
   });
 }
 
