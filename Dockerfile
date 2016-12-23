@@ -18,5 +18,5 @@ COPY . .
 
 # Expose port and then start the app
 EXPOSE 4040 8080 5858
-CMD [ "yarn", "start" ]
+CMD [ "node", "dist/index.js" ]
 

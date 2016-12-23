@@ -1,10 +1,6 @@
 {
   "development": {
-    "username": "root",
-    "password": "examplepassword",
-    "database": "database_finliv_development",
-    "host": "mysql",
-    "dialect": "mysql"
+    "use_env_variable":"DB_CONNECTION_STRING"
   },
   "test": {
     "username": "root",
@@ -14,10 +10,6 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "use_env_variable":"DB_CONNECTION_STRING"
   }
 }

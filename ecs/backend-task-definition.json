@@ -1,0 +1,31 @@
+{
+  "containerDefinitions": [
+    {
+      "name": "finliv-backend",
+      "image": "952029690192.dkr.ecr.us-east-1.amazonaws.com/finliv/finliv-backend:latest",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ],
+      "cpu": 768,
+      "memory": 300,
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "DB_CONNECTION_STRING",
+          "value": "mysql://finliv:finlivmasterpassword@finliv-production.c35hf5o8qkta.us-east-1.rds.amazonaws.com:3306/finliv_production"
+        },
+        {
+          "name": "SERVER_PORT",
+          "value": "80"
+        }
+      ]
+    }
+  ],
+  "family": "backend"
+}

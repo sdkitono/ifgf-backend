@@ -37,7 +37,7 @@ models.sequelize.sync().then(() => {
 // src: https://github.com/mochajs/mocha/issues/1912
 if (!module.parent) {
   // listen on port config.port
-  app.listen(config.port, () => {
+  app.listen(process.env.SERVER_PORT, () => {
     debug(`server started on port ${config.port} (${config.env})`);
   });
 }
