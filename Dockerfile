@@ -18,5 +18,6 @@ COPY . .
 
 # Expose port and then start the app
 EXPOSE 4040 8080 5858
+RUN yarn build
 CMD [ "node", "dist/index.js" ]
 
