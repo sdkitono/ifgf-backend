@@ -5,7 +5,7 @@ machine:
 dependencies:
   override:
     - $(aws ecr get-login --region us-east-1)
-    - docker build --rm=false -t finliv-backend .
+    - docker build -t finliv-backend .
 
 test:
   override:
