@@ -37,6 +37,15 @@ Heavily inspired from [Egghead.io - How to Write an Open Source JavaScript Libra
 - Uses [http-status](https://www.npmjs.com/package/http-status) to set http status code. It is recommended to use `httpStatus.INTERNAL_SERVER_ERROR` instead of directly using `500` when setting status code.
 - Has `.editorconfig` which helps developers define and maintain consistent coding styles between different editors and IDEs.
 
+## Docker Setup
+
+Make sure that you migrate the database with sequelize inside before initial use or after you make migrations.
+
+```sh
+docker exec -it finliv_finliv_backend_1 bash
+sequelize db:migrate
+```
+
 ## Getting Started
 
 Clone the repo:
