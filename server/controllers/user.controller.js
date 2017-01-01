@@ -1,6 +1,8 @@
 import winston from 'winston';
 import bcrypt from 'bcrypt';
+import randomstring from 'randomstring';
 import { User } from '../models';
+
 
 const saltRounds = 10;
 
@@ -36,6 +38,18 @@ function create(req, res) {
       res.json(user);
     } else {
       bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        User.build({
+          email: req.body.email,
+          password: hash,
+          verificationToken: randomstring.generate(16)
+        }).save()
+        .then((newUser) => {
+          res.json(newUser);
+        })
+        .catch((error) => {
+          res.json(error);
+        });
+        /*
         User
         .findOrCreate({ where: { email: req.body.email, password: hash } })
         .spread((userCreate, created) => {
@@ -45,6 +59,7 @@ function create(req, res) {
           winston.info(created);
           res.json(userCreate);
         });
+        */
       });
     }
   });

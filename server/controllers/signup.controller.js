@@ -22,4 +22,10 @@ function onboard(req, res) {
   });
 }
 
-export default { onboard };
+function verifyToken(req, res) {
+  return res.json({
+    verificationToken: req.query.verificationToken
+  });
+}
+
+export default { onboard, verifyToken };

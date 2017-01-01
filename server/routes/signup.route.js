@@ -9,4 +9,8 @@ router.route('/onboard')
   /** PUT /api/users/:userId - Update user */
   .post(signupCtrl.onboard);
 
+router.route('/verifyEmail')
+  /** PUT /api/users/:userId - Update user */
+  .get(signupCtrl.verifyToken);
+
 export default router;
