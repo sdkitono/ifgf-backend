@@ -5,12 +5,11 @@ MAINTAINER Samuel Kitono <samuel@kitono.id>
 RUN mkdir -p /usr/src/finliv-backend
 WORKDIR /usr/src/finliv-backend
 
-RUN npm install -g yarn && npm install -g sequelize-cli && npm install -g node-inspector
+RUN npm install -g yarn@0.17.9 && npm install -g sequelize-cli && npm install -g node-inspector
 
 # Install dependencies first so we do not have to this everytime
 COPY package.json /usr/src/finliv-backend
-RUN yarn cache clean
-RUN yarn install
+RUN npm install
 
 # Copy in the application code from your work station at the current directory
 # over to the working directory.
@@ -20,4 +19,3 @@ COPY . .
 EXPOSE 4040 8080 5858
 RUN yarn build
 CMD [ "node", "dist/index.js" ]
-
