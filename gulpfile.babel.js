@@ -8,7 +8,7 @@ const plugins = gulpLoadPlugins();
 
 const paths = {
   js: ['./**/*.js', '!dist/**', '!node_modules/**', '!coverage/**'],
-  nonJs: ['./package.json', './.gitignore'],
+  nonJs: ['./package.json', './.gitignore', './**/*.html'],
   tests: './server/tests/*.js'
 };
 

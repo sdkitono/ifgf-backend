@@ -1,6 +1,7 @@
 import winston from 'winston';
 import bcrypt from 'bcrypt';
 import randomstring from 'randomstring';
+import MailgunHelper from '../helpers/MailgunHelper';
 import { User } from '../models';
 
 
@@ -37,13 +38,25 @@ function create(req, res) {
     if (user) {
       res.json(user);
     } else {
+      const randomVar = randomstring.generate(16);
       bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         User.build({
           email: req.body.email,
           password: hash,
-          verificationToken: randomstring.generate(16)
+          verificationToken: randomVar
         }).save()
         .then((newUser) => {
+          /*
+          const data = {
+            from: 'Excited User <me@finliv.com>',
+            to: req.body.email,
+            subject: 'Hello',
+            text: `Testing some Mailgun awesomness! with verification token ${randomVar}`
+          };
+          */
+          MailgunHelper.sendMailWithToken(randomVar, req.body.email, (error, body) => {
+            console.log(body);
+          });
           res.json(newUser);
         })
         .catch((error) => {

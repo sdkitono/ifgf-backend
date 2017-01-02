@@ -53,6 +53,8 @@
     "http-status": "^0.2.0",
     "joi": "9.2.0",
     "jsonwebtoken": "7.1.9",
+    "mailcomposer": "4.0.0",
+    "mailgun-js": "0.7.15",
     "method-override": "^2.3.5",
     "mongoose": "4.7.0",
     "morgan": "1.7.0",

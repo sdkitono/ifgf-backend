@@ -31,6 +31,10 @@
         {
           "name": "SERVER_PORT",
           "value": "9000"
+        },
+        {
+          "name": "FRONTEND_SERVER",
+          "value": "http://finliv-alb-1541941420.us-east-1.elb.amazonaws.com" 
         }
       ]
     }
