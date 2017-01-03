@@ -46,14 +46,6 @@ function create(req, res) {
           verificationToken: randomVar
         }).save()
         .then((newUser) => {
-          /*
-          const data = {
-            from: 'Excited User <me@finliv.com>',
-            to: req.body.email,
-            subject: 'Hello',
-            text: `Testing some Mailgun awesomness! with verification token ${randomVar}`
-          };
-          */
           MailgunHelper.sendMailWithToken(randomVar, req.body.email, (error, body) => {
             console.log(body);
           });
@@ -62,17 +54,6 @@ function create(req, res) {
         .catch((error) => {
           res.json(error);
         });
-        /*
-        User
-        .findOrCreate({ where: { email: req.body.email, password: hash } })
-        .spread((userCreate, created) => {
-          winston.info(userCreate.get({
-            plain: true
-          }));
-          winston.info(created);
-          res.json(userCreate);
-        });
-        */
       });
     }
   });

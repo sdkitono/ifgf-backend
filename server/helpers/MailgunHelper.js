@@ -23,7 +23,7 @@ class MailgunHelper {
       from: 'no-reply@finliv.com',
       to: toEmail,
       subject: 'Confirm Email',
-      html: htmlTemplateString.replace(/replaceme.com/g, `${process.env.FRONTEND_SERVER}/confirmEmail/${token}`)
+      html: htmlTemplateString.replace(/replaceme.com/g, `${process.env.FRONTEND_SERVER}/confirmemail/${token}`)
     });
 
     mail.build((mailBuildError, message) => {
