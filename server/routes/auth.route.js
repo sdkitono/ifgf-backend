@@ -18,24 +18,15 @@ router.route('/login')
       scope: []
     }), serialize, generateToken, respond);
 
+router.route('/logout')
+  .get(authCtrl.logout);
+
 /** GET /api/auth/random-number - Protected route,
  * needs token returned by the above as header. Authorization: Bearer {token} */
 router.route('/random-number')
   .get(expressJwt({ secret: config.jwtSecret }), authCtrl.getRandomNumber);
 
 function serialize(req, res, next) {
-  /*
-  db.updateOrCreate(req.user, function(err, user) {
-    if (err) {
-      return next(err);
-    }
-    // we store information needed in token in req.user again
-    req.user = {
-      id: user.id
-    };
-    next();
-  });
-  */
   next();
 }
 
@@ -49,8 +40,10 @@ function generateToken(req, res, next) {
 }
 
 function respond(req, res) {
+  const copyUser = JSON.parse(JSON.stringify(req.user));
+  copyUser.risk = 'medium';
   res.status(200).json({
-    user: req.user,
+    user: copyUser,
     token: req.token
   });
 }

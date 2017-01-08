@@ -12,23 +12,6 @@ const config = require('../../config/env');
  * @returns {*}
  */
 function login(req, res, next) {
-  /*
-  // Ideally you'll fetch this from the db
-  // Idea here was to show how jwt works with simplicity
-  if (req.body.username === user.username && req.body.password === user.password) {
-    const token = jwt.sign({
-      username: user.username
-    }, config.jwtSecret);
-    return res.json({
-      token,
-      username: user.username
-    });
-  }
-
-  const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED);
-  return next(err);
-  */
-
   const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED);
   User.findOne({ where: { email: req.body.email } }).then((user) => {
     if (user) {
@@ -42,6 +25,12 @@ function login(req, res, next) {
     } else {
       next(err);
     }
+  });
+}
+
+function logout(req, res) {
+  res.json({
+    success: 'true'
   });
 }
 
@@ -59,4 +48,4 @@ function getRandomNumber(req, res) {
   });
 }
 
-export default { login, getRandomNumber };
+export default { login, logout, getRandomNumber };
