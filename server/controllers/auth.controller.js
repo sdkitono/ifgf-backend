@@ -15,7 +15,7 @@ const TOKENTIME = 120 * 60; // in seconds
  * @returns {*}
  */
 function login(req, res, next) {
-  const apiError = new APIError('Authentication error', httpStatus.UNAUTHORIZED);
+  const apiError = new APIError('Invalid email or password', httpStatus.UNAUTHORIZED, true);
   passport.authenticate('local',
     {
       session: false,
