@@ -12,11 +12,7 @@ const TOKENTIME = 120 * 60; // in seconds
 
 /** POST /api/auth/login - Returns token if correct username and password is provided */
 router.route('/login')
-  .post(validate(paramValidation.login), passport.authenticate(
-    'local', {
-      session: false,
-      scope: []
-    }), serialize, generateToken, respond);
+  .post(validate(paramValidation.login), authCtrl.login);
 
 router.route('/logout')
   .get(authCtrl.logout);
@@ -25,27 +21,5 @@ router.route('/logout')
  * needs token returned by the above as header. Authorization: Bearer {token} */
 router.route('/random-number')
   .get(expressJwt({ secret: config.jwtSecret }), authCtrl.getRandomNumber);
-
-function serialize(req, res, next) {
-  next();
-}
-
-function generateToken(req, res, next) {
-  req.token = jwt.sign({
-    id: req.user.id,
-  }, config.jwtSecret, {
-    expiresIn: TOKENTIME
-  });
-  next();
-}
-
-function respond(req, res) {
-  const copyUser = JSON.parse(JSON.stringify(req.user));
-  copyUser.risk = 'medium';
-  res.status(200).json({
-    user: copyUser,
-    token: req.token
-  });
-}
 
 export default router;
