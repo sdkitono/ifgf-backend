@@ -15,7 +15,7 @@ const TOKENTIME = 120 * 60; // in seconds
  * @returns {*}
  */
 function login(req, res, next) {
-  const apiError = new APIError('Invalid email or password', httpStatus.UNAUTHORIZED, true);
+  const apiError = new APIError('Invalid email or password or not verified', httpStatus.UNAUTHORIZED, true);
   passport.authenticate('local',
     {
       session: false,
@@ -24,6 +24,7 @@ function login(req, res, next) {
    (err, user) => {
      if (err) { return next(apiError); }
      if (!user) { return next(apiError); }
+     if (!user.isVerified) { return next(apiError); }
      const token = jwt.sign({
        id: user.id,
      }, config.jwtSecret, {
