@@ -4,7 +4,6 @@ import randomstring from 'randomstring';
 import MailgunHelper from '../helpers/MailgunHelper';
 import { User } from '../models';
 
-
 const saltRounds = 10;
 
 /**
@@ -99,4 +98,8 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-export default { load, get, create, update, list, remove };
+function onboardContactInfo(req, res) {
+  res.json({ success: true });
+}
+
+export default { load, get, create, update, list, remove, onboardContactInfo };

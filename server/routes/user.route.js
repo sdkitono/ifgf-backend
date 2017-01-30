@@ -2,6 +2,7 @@ import express from 'express';
 import validate from 'express-validation';
 import paramValidation from '../../config/param-validation';
 import userCtrl from '../controllers/user.controller';
+import FileUploadHelper from '../helpers/FileUploadHelper';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -24,5 +25,8 @@ router.route('/:userId')
 
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
+
+router.route('/contactInfo')
+  .post(FileUploadHelper.getUploadScanFileConnect().single('identityCardScan'), userCtrl.onboardContactInfo);
 
 export default router;
