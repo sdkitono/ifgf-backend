@@ -99,6 +99,8 @@ function remove(req, res, next) {
 }
 
 function onboardContactInfo(req, res) {
+  // If we reach here that means uploading to s3 is complete
+  // Able to get the key value property from req.body
   res.json({ success: true });
 }
 
