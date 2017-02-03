@@ -101,6 +101,17 @@ function remove(req, res, next) {
 function onboardContactInfo(req, res) {
   // If we reach here that means uploading to s3 is complete
   // Able to get the key value property from req.body
+  /*
+  addressLine1
+  city
+  dateOfBirth
+  fullName
+  identityNumber
+  phoneNumber
+  stateOption
+  taxRegistrationNumber
+  zipCode
+  */
   res.json({ success: true });
 }
 
