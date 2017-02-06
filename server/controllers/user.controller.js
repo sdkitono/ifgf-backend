@@ -98,21 +98,26 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-function onboardContactInfo(req, res) {
+function onboardContactInfo(req, res, next) {
   // If we reach here that means uploading to s3 is complete
   // Able to get the key value property from req.body
-  /*
-  addressLine1
-  city
-  dateOfBirth
-  fullName
-  identityNumber
-  phoneNumber
-  stateOption
-  taxRegistrationNumber
-  zipCode
-  */
-  res.json({ success: true });
+
+  const parts = req.body.dateOfBirth.split('/');
+  const dateOfBirth = new Date(parts[2], parts[1] - 1, parts[0]); 
+// search for known ids
+  User.findOne({ where: { id: req.user.id } }).then((updatedUser) => {
+    updatedUser.addressLine1 = req.body.addressLine1;
+    updatedUser.city = req.body.city;
+    updatedUser.dateOfBirth = dateOfBirth;
+    updatedUser.fullName = req.body.fullName;
+    updatedUser.identityNumber = req.body.identityNumber;
+    updatedUser.state = req.body.stateOption;
+    updatedUser.taxRegistrationNumber = req.body.taxRegistrationNumber;
+    updatedUser.zipCode = req.body.zipCode;
+    updatedUser.save()
+      .then(savedUser => res.json(savedUser))
+      .catch(e => next(e));
+  });
 }
 
 export default { load, get, create, update, list, remove, onboardContactInfo };

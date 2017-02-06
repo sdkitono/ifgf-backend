@@ -3,7 +3,16 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     verificationToken: DataTypes.STRING(16),
-    isVerified: DataTypes.BOOLEAN
+    isVerified: DataTypes.BOOLEAN,
+    zipCode: DataTypes.STRING(6),
+    taxRegistrationNumber: DataTypes.STRING(15),
+    state: DataTypes.STRING(20),
+    phoneNumber: DataTypes.STRING(12),
+    identityNumber: DataTypes.STRING(16),
+    dateOfBirth: DataTypes.DATEONLY,
+    city: DataTypes.STRING,
+    fullName: DataTypes.STRING,
+    addressLine1: DataTypes.STRING
   }, {
     /*
     classMethods: {
@@ -15,3 +24,16 @@ module.exports = (sequelize, DataTypes) => {
   });
   return User;
 };
+
+
+  /*
+  addressLine1
+  city
+  dateOfBirth
+  fullName
+  identityNumber
+  phoneNumber
+  stateOption
+  taxRegistrationNumber
+  zipCode
+  */
