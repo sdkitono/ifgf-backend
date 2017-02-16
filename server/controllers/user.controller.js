@@ -101,23 +101,96 @@ function remove(req, res, next) {
 function onboardContactInfo(req, res, next) {
   // If we reach here that means uploading to s3 is complete
   // Able to get the key value property from req.body
-
+  debugger;
   const parts = req.body.dateOfBirth.split('/');
-  const dateOfBirth = new Date(parts[2], parts[1] - 1, parts[0]); 
-// search for known ids
-  User.findOne({ where: { id: req.user.id } }).then((updatedUser) => {
-    updatedUser.addressLine1 = req.body.addressLine1;
-    updatedUser.city = req.body.city;
-    updatedUser.dateOfBirth = dateOfBirth;
-    updatedUser.fullName = req.body.fullName;
-    updatedUser.identityNumber = req.body.identityNumber;
-    updatedUser.state = req.body.stateOption;
-    updatedUser.taxRegistrationNumber = req.body.taxRegistrationNumber;
-    updatedUser.zipCode = req.body.zipCode;
-    updatedUser.save()
-      .then(savedUser => res.json(savedUser))
-      .catch(e => next(e));
-  });
+  const dateOfBirth = new Date(parts[2], parts[1] - 1, parts[0]);
+  const fileKey = req.file.key;
+  const {
+    addressLine1,
+    city,
+    fullName,
+    identityNumber,
+    stateOption,
+    taxRegistrationNumber,
+    zipCode,
+    phoneNumber,
+    religion,
+    relationship,
+    education,
+    citizenship,
+    motherName,
+    emergencyContactName,
+    emergencyContactNumber
+  } = req.body;
+
+  User.update(
+    {
+      addressLine1,
+      dateOfBirth,
+      city,
+      fullName,
+      identityNumber,
+      stateOption,
+      taxRegistrationNumber,
+      zipCode,
+      phoneNumber,
+      religion,
+      relationship,
+      education,
+      citizenship,
+      motherName,
+      emergencyContactName,
+      emergencyContactNumber,
+      fileKey
+    },
+    { where: { id: req.user.id } }
+  )
+  .then(savedUser => res.json(savedUser))
+  .catch(e => next(e));
 }
 
-export default { load, get, create, update, list, remove, onboardContactInfo };
+function onboardFinancialInfo(req, res, next) {
+  const {
+    employmentStatus,
+    occupation,
+    employer,
+    employerAddress,
+    employerPhoneNumber,
+    householdIncome,
+    yearEmployment,
+    bankName,
+    bankBranch,
+    bankAccountNumber,
+    bankAccountName
+  } = req.body;
+
+  User.update(
+    {
+      employmentStatus,
+      occupation,
+      employer,
+      employerAddress,
+      employerPhoneNumber,
+      householdIncome,
+      yearEmployment,
+      bankName,
+      bankBranch,
+      bankAccountNumber,
+      bankAccountName
+    },
+    { where: { id: req.user.id } }
+  )
+  .then(savedUser => res.json(savedUser))
+  .catch(e => next(e));
+}
+
+export default {
+  load,
+  get,
+  create,
+  update,
+  list,
+  remove,
+  onboardContactInfo,
+  onboardFinancialInfo
+};

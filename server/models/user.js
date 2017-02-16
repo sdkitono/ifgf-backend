@@ -12,7 +12,25 @@ module.exports = (sequelize, DataTypes) => {
     dateOfBirth: DataTypes.DATEONLY,
     city: DataTypes.STRING,
     fullName: DataTypes.STRING,
-    addressLine1: DataTypes.STRING
+    addressLine1: DataTypes.STRING,
+    bank: DataTypes.STRING(50),
+    bankBranch: DataTypes.STRING(100),
+    bankAccountNumber: DataTypes.STRING(8),
+    bankAccountName: DataTypes.STRING(100),
+    employmentStatus: DataTypes.STRING(50),
+    employer: DataTypes.STRING(50),
+    employerAddress: DataTypes.STRING(100),
+    employerPhoneNumber: DataTypes.STRING(20),
+    householdIncome: DataTypes.STRING,
+    yearEmployment: DataTypes.STRING,
+    religion: DataTypes.STRING(20),
+    relationship: DataTypes.STRING(20),
+    education: DataTypes.STRING(20),
+    citizenship: DataTypes.STRING(50),
+    motherName: DataTypes.STRING(50),
+    emergencyContactName: DataTypes.STRING(50),
+    emergencyContactNumber:DataTypes.STRING(20),
+    fileKey: DataTypes.STRING
   }, {
     /*
     classMethods: {
@@ -24,16 +42,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return User;
 };
-
-
-  /*
-  addressLine1
-  city
-  dateOfBirth
-  fullName
-  identityNumber
-  phoneNumber
-  stateOption
-  taxRegistrationNumber
-  zipCode
-  */
