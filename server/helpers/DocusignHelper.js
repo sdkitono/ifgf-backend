@@ -86,7 +86,7 @@ export default function sendMailDocusignPromise(customerName, customerEmail, cus
         // Step 2 - Send envelope with one Embedded recipient (using clientUserId property)
         () => {
           const url = baseUrl + '/envelopes';
-          const webhookUrl = `https://beta.finliv.com/docusign/listener/${customerId}`;
+          const webhookUrl = `https://beta.finliv.com/api/docusign/listener/${customerId}`;
           const eventNotification = {
               "url": webhookUrl,
               loggingEnabled: "true",
