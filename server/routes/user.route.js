@@ -29,4 +29,10 @@ router.param('userId', userCtrl.load);
 router.route('/contactInfo')
   .post(FileUploadHelper.getUploadScanFileConnect().single('identityCardScan'), userCtrl.onboardContactInfo);
 
+router.route('/financialInfo')
+  .post(userCtrl.onboardFinancialInfo);
+
+router.route('/investmentInfo')
+  .post(userCtrl.onboardInvestmentInfo);
+
 export default router;

@@ -2,6 +2,7 @@ import winston from 'winston';
 import bcrypt from 'bcrypt';
 import randomstring from 'randomstring';
 import MailgunHelper from '../helpers/MailgunHelper';
+import sendMailDocusignPromise from '../helpers/DocusignHelper';
 import { User } from '../models';
 
 const saltRounds = 10;
@@ -101,7 +102,6 @@ function remove(req, res, next) {
 function onboardContactInfo(req, res, next) {
   // If we reach here that means uploading to s3 is complete
   // Able to get the key value property from req.body
-  debugger;
   const parts = req.body.dateOfBirth.split('/');
   const dateOfBirth = new Date(parts[2], parts[1] - 1, parts[0]);
   const fileKey = req.file.key;
@@ -184,6 +184,48 @@ function onboardFinancialInfo(req, res, next) {
   .catch(e => next(e));
 }
 
+function onboardInvestmentInfo(req, res, next) {
+  const {
+    relationshipWithRHB,
+    relationshipWithRHBExtension,
+    memberOfFinancialCompany,
+    memberOfFinancialCompanyExtension,
+    memberOfPublicCorporation,
+    memberOfPublicCorporationExtension
+  } = req.body;
+
+  User.update(
+    {
+      relationshipWithRHB,
+      relationshipWithRHBExtension,
+      memberOfFinancialCompany,
+      memberOfFinancialCompanyExtension,
+      memberOfPublicCorporation,
+      memberOfPublicCorporationExtension
+    },
+    { where: { id: req.user.id } }
+  )
+  .then(() => {
+    User.findOne({ where: { id: req.user.id } }).then((user) => {
+      if (user) {
+        sendMailDocusignPromise(user.fullName, user.email, user.id)
+        .then(
+          () => res.json(user),
+          (error) => {
+            next(error);
+          });
+      }
+    });
+  })
+  .catch(e => next(e));
+}
+
+function docusignListener(req, res, next) {
+  const userId = req.params.userId;
+  console.log(req.body);
+  res.send('OK');
+}
+
 export default {
   load,
   get,
@@ -192,5 +234,7 @@ export default {
   list,
   remove,
   onboardContactInfo,
-  onboardFinancialInfo
+  onboardFinancialInfo,
+  onboardInvestmentInfo,
+  docusignListener
 };

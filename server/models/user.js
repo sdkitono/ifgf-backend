@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     employerAddress: DataTypes.STRING(100),
     employerPhoneNumber: DataTypes.STRING(20),
     householdIncome: DataTypes.STRING,
-    yearEmployment: DataTypes.STRING,
+    yearEmployment: DataTypes.INTEGER(4),
     religion: DataTypes.STRING(20),
     relationship: DataTypes.STRING(20),
     education: DataTypes.STRING(20),
