@@ -1,6 +1,8 @@
 import winston from 'winston';
 import bcrypt from 'bcrypt';
 import randomstring from 'randomstring';
+import httpStatus from 'http-status';
+import APIError from '../helpers/APIError';
 import MailgunHelper from '../helpers/MailgunHelper';
 import sendMailDocusignPromise from '../helpers/DocusignHelper';
 import { User } from '../models';
@@ -214,6 +216,9 @@ function onboardInvestmentInfo(req, res, next) {
           (error) => {
             next(error);
           });
+      } else {
+        const apiError = new APIError('Unable to find user error', httpStatus.NOT_FOUND, true);
+        next(apiError);
       }
     });
   })

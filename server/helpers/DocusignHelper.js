@@ -61,6 +61,7 @@ function parseResponseBody(err, res, body) {
 }
 
 export default function sendMailDocusignPromise(customerName, customerEmail, customerId) {
+  console.log("calling docusign helper");
   const promiseDocusignURL = new Promise((resolve, reject) => {
     async.waterfall(
       [
