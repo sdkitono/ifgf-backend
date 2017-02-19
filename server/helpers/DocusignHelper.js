@@ -85,29 +85,33 @@ export default function sendMailDocusignPromise(customerName, customerEmail, cus
         },
         // Step 2 - Send envelope with one Embedded recipient (using clientUserId property)
         () => {
-          const url = baseUrl + '/envelopes';
-          const webhookUrl = `https://beta.finliv.com/api/docusign/listener/${customerId}`;
-          const eventNotification = {
-              "url": webhookUrl,
-              loggingEnabled: "true",
-              "requireAcknowledgment": "true",
-              "useSoapInterface": "false",
-              "includeCertificateWithSoap": "false",
-              "signMessageWithX509Cert": "false",
-              "includeDocuments": "true",
-              "includeEnvelopeVoidReason": "true",
-              "includeTimeZone": "true",
-              "includeSenderAccountAsCustomField": "true",
-              "includeDocumentFields": "true",
-              "includeCertificateOfCompletion": "true",
-              "recipientEvents": [
-                  {"recipientEventStatusCode": "Sent"},
-                  {"recipientEventStatusCode": "Delivered"},
-                  {"recipientEventStatusCode": "Completed"},
-                  {"recipientEventStatusCode": "Declined"},
-                  {"recipientEventStatusCode": "AuthenticationFailed"},
-                  {"recipientEventStatusCode": "AutoResponded"}]
-          };
+          const url = `${baseUrl}/envelopes`;
+          // only send the notification if it is not development
+          let eventNotification = null;
+          if (process.env.NODE_ENV !== 'development') {
+            const webhookUrl = `https://beta.finliv.com/api/docusign/listener/${customerId}`;
+            eventNotification = {
+              url: webhookUrl,
+              loggingEnabled: true,
+              requireAcknowledgment: true,
+              useSoapInterface: false,
+              includeCertificateWithSoap: false,
+              signMessageWithX509Cert: false,
+              includeDocuments: true,
+              includeEnvelopeVoidReason: true,
+              includeTimeZone: true,
+              includeSenderAccountAsCustomField: true,
+              includeDocumentFields: true,
+              includeCertificateOfCompletion: true,
+              recipientEvents: [
+                  { recipientEventStatusCode: 'Sent' },
+                  { recipientEventStatusCode: 'Delivered' },
+                  { recipientEventStatusCode: 'Completed' },
+                  { recipientEventStatusCode: 'Declined' },
+                  { recipientEventStatusCode: 'AuthenticationFailed' },
+                  { recipientEventStatusCode: 'AutoResponded' }]
+            };
+          }
           const body = JSON.stringify({
             accountId,
             emailSubject: 'DocuSign API call - Embedded Sending Example',

@@ -30,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
     motherName: DataTypes.STRING(50),
     emergencyContactName: DataTypes.STRING(50),
     emergencyContactNumber:DataTypes.STRING(20),
+    relationshipWithRHB: DataTypes.BOOLEAN,
+    relationshipWithRHBExtension: DataTypes.STRING,
+    memberOfFinancialCompany: DataTypes.BOOLEAN,
+    memberOfFinancialCompanyExtension: DataTypes.STRING,
+    memberOfPublicCorporation: DataTypes.BOOLEAN,
+    memberOfPublicCorporationExtension: DataTypes.STRING,
     fileKey: DataTypes.STRING
   }, {
     /*

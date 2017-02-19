@@ -195,7 +195,6 @@ function onboardInvestmentInfo(req, res, next) {
     memberOfPublicCorporation,
     memberOfPublicCorporationExtension
   } = req.body;
-
   User.update(
     {
       relationshipWithRHB,
@@ -225,9 +224,16 @@ function onboardInvestmentInfo(req, res, next) {
   .catch(e => next(e));
 }
 
-function docusignListener(req, res, next) {
-  const userId = req.params.userId;
-  console.log(req.body);
+function docusignListener(req, res) {
+  console.log('Docusign Status', req.body.docusignenvelopeinformation.envelopestatus.status);
+  User.update(
+    {
+      docusignStatus: req.body.docusignenvelopeinformation.envelopestatus.status
+    },
+    { where: { id: req.params.userId } }
+  ).catch((e) => {
+    console.log('Docusign Listener Error', e);
+  });
   res.send('OK');
 }
 
