@@ -2,7 +2,7 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('InvestmentFund', [{
+    return queryInterface.bulkInsert('InvestmentFunds', [{
       name: 'RHB LQ45',
       nav: 1258.86,
       url: 'http://www.bareksa.com/id/data/reksadana/1103/rhb-lq45-tracker'
