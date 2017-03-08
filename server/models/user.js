@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     memberOfPublicCorporation: DataTypes.BOOLEAN,
     memberOfPublicCorporationExtension: DataTypes.STRING,
     fileKey: DataTypes.STRING,
-    docusignStatus: DataTypes.STRING
+    docusignStatus: DataTypes.STRING,
+    paperworkCompleted: DataTypes.BOOLEAN
   }, {
     /*
     classMethods: {

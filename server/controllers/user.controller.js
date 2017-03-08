@@ -25,8 +25,30 @@ function load(req, res, next, id) {
  * Get user
  * @returns {User}
  */
-function get(req, res) {
-  return res.json(req.user);
+function get(req, res, next) {
+  User.findOne({ where: { id: req.params.userId } }).then((user) => {
+    if (user) {
+      res.json(user);
+    } else {
+      const apiError = new APIError('Unable to find user error', httpStatus.NOT_FOUND, true);
+      next(apiError);
+    }
+  });
+}
+
+/**
+ * Get user
+ * @returns {User}
+ */
+function getMe(req, res, next) {
+  User.findOne({ where: { id: req.user.id } }).then((user) => {
+    if (user) {
+      res.json(user);
+    } else {
+      const apiError = new APIError('Unable to find user error', httpStatus.NOT_FOUND, true);
+      next(apiError);
+    }
+  });
 }
 
 /**
@@ -240,6 +262,7 @@ function docusignListener(req, res) {
 export default {
   load,
   get,
+  getMe,
   create,
   update,
   list,

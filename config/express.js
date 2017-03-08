@@ -11,12 +11,15 @@ import expressValidation from 'express-validation';
 import helmet from 'helmet';
 import passport from 'passport';
 import bcrypt from 'bcrypt';
+import later from 'later';
+import numeral from 'numeral';
+import scrapeIt from 'scrape-it';
 import { Strategy as LocalStrategy } from 'passport-local';
 import winstonInstance from './winston';
 import routes from '../server/routes/index.route';
 import config from './env';
 import APIError from '../server/helpers/APIError';
-import { User } from '../server/models';
+import { User, InvestmentFund } from '../server/models';
 
 
 const app = express();
@@ -114,5 +117,34 @@ app.use((err, req, res, next) => // eslint-disable-line no-unused-vars
     stack: config.env === 'development' ? err.stack : {}
   })
 );
+
+// function to execute
+function updateInvestmendFund() {
+  InvestmentFund.findAll().then((investmentFundArray) => {
+    investmentFundArray.forEach((investmentFund) => {
+      console.log('investment fund scrapping', investmentFund);
+      scrapeIt(investmentFund.url, {
+        value: 'body > div.bodywrap.clearfix > section.bodybase > div.grid.w750.fl.profilereksadana > div:nth-child(7) > div.fl.grid.w250 > div > span.fS40'
+      }).then((page) => {
+        const nav = numeral(page.value).value();
+        InvestmentFund.update(
+          {
+            nav,
+          },
+          { where: { id: investmentFund.id } }
+        )
+        .then(fund => console.log('success saving investment fund', fund))
+        .catch(e => console.log('error updating investment fund', e));
+      });
+    });
+  });
+}
+
+// will fire every 5 minutes
+const textSched = later.parse.text('at 2:00 am');
+// const textSched = later.parse.text('every 2 mins');
+
+// execute logTime for each successive occurrence of the text schedule
+const timer2 = later.setInterval(updateInvestmendFund, textSched);
 
 export default app;
