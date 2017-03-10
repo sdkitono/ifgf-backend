@@ -126,7 +126,9 @@ function updateInvestmendFund() {
       scrapeIt(investmentFund.url, {
         value: 'body > div.bodywrap.clearfix > section.bodybase > div.grid.w750.fl.profilereksadana > div:nth-child(7) > div.fl.grid.w250 > div > span.fS40'
       }).then((page) => {
-        const nav = numeral(page.value).value();
+        const numberSplit = page.value.split(',');
+        const concatNumber = `${numberSplit[0].replace('.', ',')}.${numberSplit[1]}`;
+        const nav = numeral(concatNumber).value();
         InvestmentFund.update(
           {
             nav,
@@ -142,7 +144,7 @@ function updateInvestmendFund() {
 
 // will fire every 5 minutes
 const textSched = later.parse.text('at 2:00 am');
-// const textSched = later.parse.text('every 2 mins');
+//const textSched = later.parse.text('every 2 mins');
 
 // execute logTime for each successive occurrence of the text schedule
 const timer2 = later.setInterval(updateInvestmendFund, textSched);
