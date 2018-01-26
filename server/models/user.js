@@ -40,13 +40,12 @@ module.exports = (sequelize, DataTypes) => {
     docusignStatus: DataTypes.STRING,
     paperworkCompleted: DataTypes.BOOLEAN
   }, {
-    /*
     classMethods: {
       associate: (models) => {
-        // associations can be defined here
+        models.User.hasMany(models.UsersInvestmentFund, { as: 'UsersInvestmentFund', foreignKey: 'user_id' });
+        // models.User.belongsToMany(models.InvestmentFund, { through: { model: models.UsersInvestmentFund, unique:true }, foreignKey: 'user_id', as: {singular: 'investmentFund', plural: 'investmentFunds'} });
       }
     }
-    */
   });
   return User;
 };

@@ -1,6 +1,10 @@
 {
   "development": {
-    "use_env_variable":"DB_CONNECTION_STRING"
+    "username": "root",
+    "password": "examplepassword",
+    "database": "database_ifgf_development",
+    "host": "mysql",
+    "dialect": "mysql"
   },
   "test": {
     "username": "root",

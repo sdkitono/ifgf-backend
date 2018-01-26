@@ -28,6 +28,10 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
+
+const { User, InvestmentFund, UsersInvestmentFund } = db;
+UsersInvestmentFund.belongsTo(InvestmentFund, { as: 'investmentFund', foreignKey: 'investment_fund_id' });
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

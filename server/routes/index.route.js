@@ -13,6 +13,13 @@ router.get('/health-check', (req, res) =>
   res.send('OK')
 );
 
+router.get('/loadInfo', (req, res) =>
+  res.send({
+    message: 'This came  yolo from the cofeee  yolow api server',
+    time: Date.now()
+  })
+);
+
 router.use('/users', expressJwt({ secret: config.jwtSecret }), userRoutes);
 router.use('/auth', authRoutes);
 router.use('/signup', signupRoutes);

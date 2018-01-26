@@ -141,12 +141,13 @@ function updateInvestmendFund() {
     });
   });
 }
-
+/*
 // will fire every 5 minutes
 const textSched = later.parse.text('at 2:00 am');
 //const textSched = later.parse.text('every 2 mins');
 
 // execute logTime for each successive occurrence of the text schedule
 const timer2 = later.setInterval(updateInvestmendFund, textSched);
+*/
 
 export default app;

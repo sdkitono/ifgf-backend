@@ -2,6 +2,7 @@ import express from 'express';
 import validate from 'express-validation';
 import paramValidation from '../../config/param-validation';
 import userCtrl from '../controllers/user.controller';
+import investmentFundCtrl from '../controllers/investmentFund.controller';
 import FileUploadHelper from '../helpers/FileUploadHelper';
 
 const router = express.Router(); // eslint-disable-line new-cap
@@ -37,5 +38,8 @@ router.route('/financialInfo')
 
 router.route('/investmentInfo')
   .post(userCtrl.onboardInvestmentInfo);
+
+router.route('/testInvestmentFund')
+  .post(investmentFundCtrl.setInvestmentFund);
 
 export default router;
