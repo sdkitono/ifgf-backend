@@ -1,22 +1,42 @@
-FROM node:5.8
-MAINTAINER Samuel Kitono <samuel@kitono.id>
+FROM mhart/alpine-node:8
 
-# Create app directory
-RUN mkdir -p /usr/src/ifgf-backend
-WORKDIR /usr/src/ifgf-backend
+# Install required dependencies (Alpine Linux packages)
+RUN apk update && \
+  apk add --no-cache \
+    sudo \
+    g++ \
+    gcc \
+    git \
+    libev-dev \
+    libevent-dev \
+    libuv-dev \
+    make \
+    openssl-dev \
+    perl \
+    python
 
-RUN npm install -g yarn@0.17.9 && npm install -g node-inspector
+# Add user and make it sudoer
+ARG uid=1000
+ARG user=username
+RUN set -x ; \
+  addgroup -g $uid -S $user ; \
+  adduser -u $uid -D -S -G $user $user \
+  && exit 0 ; exit 1
+RUN echo $user' ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Install dependencies first so we do not have to this everytime
-COPY package.json /usr/src/ifgf-backend
-COPY npm-shrinkwrap.json /usr/src/ifgf-backend
-RUN npm install
+# Make project directory with permissions
+RUN mkdir /ifgf-backend
 
-# Copy in the application code from your work station at the current directory
-# over to the working directory.
+# Switch to project directory
+WORKDIR /ifgf-backend
+
+# Copy required stuff
 COPY . .
 
-# Expose port and then start the app
-EXPOSE 4040 8080 
-RUN yarn build
-CMD [ "node", "dist/index.js" ]
+# Give owner rights to the current user
+RUN chown -Rh $user:$user /ifgf-backend
+
+# Install (local) NPM packages and build
+RUN yarn
+
+USER $user
