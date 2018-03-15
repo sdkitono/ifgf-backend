@@ -5,16 +5,12 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
-  const user = sequelizeClient.define('ifgf_user', {
+  const user = sequelizeClient.define('User', {
     name: {
       type: DataTypes.STRING,
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    address: {
       type: DataTypes.STRING,
       allowNull: false
     }

@@ -2,7 +2,8 @@ const Sequelize = require('sequelize');
 
 module.exports = function () {
   const app = this;
-  const connectionString = 'mysql://root:examplepassword@mysql:3306/database_ifgf_development';
+  //const connectionString = 'mysql://root:examplepassword@mysql:3306/database_ifgf_development';
+  const connectionString = 'mysql://techadmin:d3vTEAM2018!@ifgfseattle-test.cjzulmygqqiw.us-east-2.rds.amazonaws.com:3306/ifgfseattle_test';
   const sequelize = new Sequelize(connectionString, {
     dialect: 'mysql',
     logging: false,

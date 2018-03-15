@@ -17,7 +17,7 @@ RUN apk update && \
 
 # Add user and make it sudoer
 ARG uid=1000
-ARG user=username
+ARG user=samuelkitono
 RUN set -x ; \
   addgroup -g $uid -S $user ; \
   adduser -u $uid -D -S -G $user $user \

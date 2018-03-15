@@ -1,14 +1,38 @@
 /* eslint-disable no-unused-vars */
+const initialWidgets = [
+  {
+    id: 1,
+    color: 'Red',
+    sprocketCount: 7,
+    owner: 'John'
+  },
+  {
+    id: 2,
+    color: 'Taupe',
+    sprocketCount: 1,
+    owner: 'George'
+  },
+  {
+    id: 3,
+    color: 'SAMUELLL',
+    sprocketCount: 8,
+    owner: 'Ringo'
+  },
+  {
+    id: 4,
+    color: 'Blue',
+    sprocketCount: 2,
+    owner: 'Paul'
+  }
+];
+
 class Service {
   constructor (options) {
     this.options = options || {};
   }
 
   find (params) {
-    return Promise.resolve({
-      message: 'This came test from the cofeee Samuel Test yow yolow api server',
-      time: Date.now()
-    });
+    return Promise.resolve(initialWidgets);
   }
 
   get (id, params) {
