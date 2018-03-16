@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+    docker:
+      - image: circleci/node:7.10
+    steps:
+      - run:
+          name: Trigger Kubernetes Deploy
+          command: curl -X POST https://circleci.com/api/v1.1/project/github/sdkitono/ifgf-docker-compose?circle-token=$CIRCLE_TOKEN
+
