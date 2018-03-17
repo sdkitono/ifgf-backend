@@ -20,6 +20,6 @@ jobs:
           command: kops export kubecfg --name ifgftest.curchats.com --state s3://ifgfkopstest
       - run:
           name: Kubernetes deployment
-          command: kubectl set image deployment/ifgf-deployment backend=keyclipse/ifgf-backend:${CIRCLE_BUILD_NUM}
+          command: kubectl set image deployment/ifgf-deployment backend=keyclipse/ifgf-backend:${CIRCLE_SHA1}
 
       
